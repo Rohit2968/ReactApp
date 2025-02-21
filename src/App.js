@@ -5,6 +5,28 @@ import "./App.css";
 
 const API_URL = "https://restapi-1-4r9w.onrender.com/bfhl";
 
+const handleSubmit = async () => {
+  try {
+    const trimmedInput = jsonInput.trim();
+    
+    // Ensure input is valid JSON
+    const parsedData = JSON.parse(trimmedInput);
+    
+    if (!parsedData.data || !Array.isArray(parsedData.data)) {
+      throw new Error("Invalid JSON format");
+    }
+
+    setError(""); // Clear previous errors
+
+    // Send API request
+    const response = await axios.post(API_URL, parsedData);
+    setResponseData(response.data);
+  } catch (err) {
+    setError("Invalid JSON input. Please enter a valid JSON format.");
+  }
+};
+
+
 function App() {
   document.title = "ABCD123";
 
